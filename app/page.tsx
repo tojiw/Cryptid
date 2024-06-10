@@ -1,113 +1,150 @@
+"use client";
+import Sidebar from "@/components/Sidebar/Sidebar";
+import { BarChart } from "@mui/x-charts/BarChart";
+import { LineChart } from "@mui/x-charts/LineChart";
 import Image from "next/image";
+import {
+  ArrowLeft,
+  ArrowRightIcon,
+  ArrowUpDown,
+  CircleDot,
+} from "lucide-react";
+import CryptoAssets from "@/components/CryptoAssets/CryptoAssets";
+import Leaderboard from "@/components/Leaderboard/Leaderboard";
+import SearchBar from "@/components/SearchBar/SearchBar";
+import eth from "@/public/eth.svg";
+import btc from "@/public/btc.svg";
+import sol from "@/public/sol.svg";
+import usdt from "@/public/usdt.svg";
+import shib from "@/public/shib.svg";
+import Transactions from "@/components/Transactions/Transactions";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className="font-medium tracking-tight min-h-screen bg-black text-white">
+      <div className="flex min-h-screen">
+        <Sidebar />
+        <div className="flex flex-col flex-grow p-2 overflow-hidden">
+          <div className="flex justify-between items-center">
+            <p className="px-2 text-sm">Main / Stakes</p>
+            <button className="bg-[#EA580C] p-2 px-4 rounded-lg mr-4 max-sm:mb-3 max-md:mb-3">
+              Account Settings
+            </button>
+          </div>
+          <div className="flex flex-row gap-1 max-md:flex-col max-md:items-center max-md:mr-1 max-md:gap-4">
+            <div className="flex flex-col md:flex-row mt-2 ml-1 border-[0.1px] border-[#e5e7eb] rounded-lg overflow-hidden w-2/3 max-md:w-full max-md:m-auto">
+              <div className="flex flex-col  justify-between  md:w-1/3 border-r-[1px] border-gray-50 ">
+                <p className="p-3 text-sm">Earned Activity</p>
+                <div className="flex flex-col">
+                  <p className="p-3 py-2 text-xl">Staked Profit</p>
+                  <p className="p-3 py-3 text-4xl max-md:text-xl">$13,400.59</p>
+                </div>
+              </div>
+              <div className="mt-24 ">
+                <BarChart
+                  xAxis={[
+                    {
+                      scaleType: "band",
+                      data: ["Bitcoin", "Etherium", "Solana"],
+                    },
+                  ]}
+                  series={[
+                    { data: [4, 3, 5] },
+                    { data: [1, 6, 3] },
+                    { data: [2, 5, 6] },
+                  ]}
+                  colors={["#EA580C"]}
+                  width={650}
+                  height={300}
+                />
+              </div>
+            </div>
+            <div className="w-1/3 mt-2 ml-4 border-[0.1px] border-[#e5e7eb] rounded-lg max-md:w-full max-md:m-auto">
+              <div className="flex flex-col ">
+                <p className="p-3 text-sm">Data</p>
+                <div className="overflow-hidden">
+                  <LineChart
+                    xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                    series={[
+                      {
+                        data: [2, 5.5, 2, 8.5, 1.5, 5],
+                      },
+                    ]}
+                    width={400}
+                    height={260}
+                    colors={["#EA580C"]}
+                  />
+                </div>
+                <div className="flex flex-col items-center">
+                  <p>Total Balance (USD)</p>
+                  <p className="text-4xl py-3 max-md:text-xl">$17,582.30</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-row gap-2 mt-4 max-md:flex-col max-md:items-center">
+            <div className="w-[19%] h-[50vh] border-[0.1px] border-[#e57eb] ml-1 rounded-lg mt-2 max-md:w-full max-md:m-auto">
+              <p className="text-sm p-3">Risk rate of your assets</p>
+              <div className="flex flex-row justify-between align-middle items-center px-4 border-b-[1px] border-[#e57eb] pb-4">
+                <p className="text-5xl">7.5</p>
+                <p className="text-xl">/ 10</p>
+              </div>
+              <p className="p-3">Your top assets</p>
+              <CryptoAssets />
+            </div>
+            <Leaderboard />
+            <div
+              id="convert"
+              className="w-1/3 h-[50vh] border-[0.1px] border-[#e57eb] ml-4 rounded-lg mt-2 max-md:w-full max-md:m-auto max-md:mt-3"
+            >
+              <div className="border-b-[1px]">
+                <p className="text-sm p-3">Quick Swap</p>
+              </div>
+              <div className="flex flex-col">
+                <p className="text-sm px-3 pt-3">Fee Asset</p>
+                <div className="p-3">
+                  <input
+                    type="text"
+                    className="w-full bg-[#252525] border-none py-1 placeholder:px-3"
+                    placeholder="Etherium"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <p className="text-sm px-3 pt-3">Swap Assets</p>
+                  <div className="p-3 flex flex-col items-center justify-center">
+                    <input
+                      type="text"
+                      className="w-full bg-[#252525] border-none py-1 placeholder:px-3"
+                      placeholder="Etherium"
+                    />
+                    <div className="p-3 mt-2 rounded-full bg-[#EA580C] hover:cursor-pointer">
+                      <ArrowUpDown />
+                    </div>
+                  </div>
+
+                  <div className="px-3 flex flex-col items-center justify-center">
+                    <input
+                      type="text"
+                      className="w-full bg-[#252525] border-none py-1 placeholder:px-3"
+                      placeholder="Solana"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="w-full h-[50vh] border-[0.1px] border-[#e57eb] ml-1 rounded-lg mt-4 max-md:h-[75vh] max-md:m-auto max-md:mt-3">
+            <div className="flex flex-row justify-between px-3 items-center align-middle border-b-[1px]">
+              <p className="p-3">Recent Transactions</p>
+              <div className="w-1/4 pt-3">
+                <SearchBar />
+              </div>
+            </div>
+            <Transactions/>
+          </div>
         </div>
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }
+
